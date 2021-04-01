@@ -14,93 +14,59 @@ class Snake{
         
         this.x = this.body[this.body.length-1].x;
         this.y = this.body[this.body.length-1].y;
-        // this.frameX = 0;
-        // this.frameY = 0;
-        // alert('snakeCon');
     }
     update(){
-        //console.log('update');
-
-        
-
         let tempY = this.body[this.body.length-1].y;
         let tempX = this.body[this.body.length - 1].x;
-        // let newOb;
 
         if(keys[38]){//up
             if(this.moving == false && this.y > canvas.height - canvas.height){
-            //    this.y -= grid;
-
                 let newOb = {x:tempX, y:(tempY -= grid)};
 
                 if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
                     this.moveS(newOb);
-                    // this.makeHead(newOb.x,newOb.y);
-                    // this.moving = true;
                 }
-                
-
-
-                
-            //    this.frameX = 1;
-            //    this.frameY = 0;
-            //    alert('up');
+            }else if(this.moving == false){
+                this.dead();
             }
         }
         if(keys[40]){//down
             if(this.y < canvas.height - this.height && this.moving == false){
-                // this.y += grid;
-
                 let newOb = {x:tempX, y:(tempY += grid)};
                 if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
                     this.moveS(newOb);
-                    // this.makeHead(newOb.x,newOb.y);
-                    // this.moving = true;
                 }
-                // this.frameY = 3;
+            }else if(this.moving == false){
+                this.dead();
             }
         }
         if(keys[37]){//left
             if(this.x > 0 && this.moving == false){
-                // this.x -= grid;
-
                 let newOb = {x:(tempX -= grid), y:tempY};
                 if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
                     this.moveS(newOb);
-                    // this.makeHead(newOb.x,newOb.y);
-                    // this.moving = true;
                 }
-                // this.frameY =2;
+            }else if(this.moving == false){
+                this.dead();
             }
         }
         if(keys[39]){//right
             if(this.x < canvas.width - this.width && this.moving == false){
-                // this.x += grid;
-
                 let newOb = {x:(tempX += grid), y:tempY};
                 if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
                     this.moveS(newOb);
-                    // this.makeHead(newOb.x,newOb.y);
-                    // this.moving = true;
                 }
-                // this.frameY = 1;
+            }else if(this.moving == false){
+                this.dead();
             }
         }
-
-
-        // if(this.y < 0) scored();
-
     }
     draw(){
         // alert('drawSnake');
         for (let i = 0; i < this.body.length; i++) {
             ctx.fillStyle = 'green';
-            // ctx.fillRect(this.x,this.y,this.width,this.height);
             ctx.fillRect(this.body[i].x,this.body[i].y,this.width,this.height);            
         }
-        // ctx.fillStyle = 'green';
-        // // ctx.fillRect(this.x,this.y,this.width,this.height);
-        // ctx.fillRect(this.body[0].x,this.body[0].y,this.width,this.height);
     }
     moveS(newOb){
         if(!this.checkIfBody(newOb)){
@@ -124,17 +90,19 @@ class Snake{
         for (let i = 1; i < this.body.length; i++) {
             console.log('checking');
             if(collision(newOb,this.body[i])){
-                // alert('aaah');
-                ctx.fillStyle = 'red';
-                for (let i = 0; i < this.body.length; i++) {
-                    ctx.fillStyle = 'red';
-                    // ctx.fillRect(this.x,this.y,this.width,this.height);
-                    ctx.fillRect(this.body[i].x,this.body[i].y,this.width,this.height);            
-                }
+                this.dead();
                 return 1;
             }
         }
         return 0;
+    }
+    dead(){
+        ctx.fillStyle = 'red';
+        for (let i = 0; i < this.body.length; i++) {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(this.body[i].x,this.body[i].y,this.width,this.height);
+            resetGame();            
+        }
     }
 }
 

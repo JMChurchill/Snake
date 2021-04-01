@@ -5,6 +5,7 @@ function animate(){
     snake.update();
     food.draw();
     handleFood();
+    handleScoreBoard();
     frame++;
     requestAnimationFrame(animate);
 }
@@ -32,6 +33,11 @@ function scored(){
     snake.x = canvas.width/2 - snake.width/2;
     snake.y = canvas.height - snake.height - 40;
 }
+function handleScoreBoard(){
+    ctx.fillStyle = 'black';
+    ctx.font = '25px Verdana';
+    ctx.fillText('Score: '+score, 5, 30);
+}
 
 
 // Collision detection between two rectangles
@@ -43,9 +49,19 @@ function collision(first, second){
 }
 
 function resetGame(){
-    snake.x = canvas.width/2 - snake.width/2;
-    snake.y = canvas.height - snake.height - 40;
-    collisionsCount++;
+    // alert('dead');
+
+    let startX = canvas.width/2 - snake.width;
+    let startY = canvas.height/2 - snake.height;
+
+    snake.body = [{x:startX, y:startY},{x:(startX + snake.width), y:startY},{x:(startX + snake.width*2), y:startY}]
+    snake.x = snake.body[snake.body.length-1].x;
+    snake.y = snake.body[snake.body.length-1].y;
+
+    food.move();
+
+    // collisionsCount++;
+    score = 0;
     gameSpeed = 1;
 
 }

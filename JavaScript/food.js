@@ -13,7 +13,7 @@ class Food{
         ctx.fillStyle = 'red';
         ctx.fillRect(this.x,this.y,this.width,this.height);
     }
-    isEaten(){
+    move(){
         this.x = Math.floor(Math.random() * 20)*25;
         this.y = Math.floor(Math.random() * 20)*25;
     }
@@ -27,6 +27,7 @@ function handleFood(){
     let foodObject = {x:food.x,y:food.y};
     if(collision(snake,foodObject)){
         snake.size += 1;
-        food.isEaten();
+        food.move();
+        score++;
     }
 }
