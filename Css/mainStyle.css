@@ -1,0 +1,10 @@
+#myCanvas{
+    border: 5px solid black;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    transform: translate(-50%,-50%);
+    /* background: url('background.png'); */
+}
