@@ -9,57 +9,63 @@ class Snake{
 
         this.moving = false;
         this.size = 10;
-        this.body = [{x:startX, y:startY},{x:(startX + this.width), y:startY},{x:(startX + this.width*2), y:startY}]
+        this.body = [{x:startX, y:startY},{x:startX, y:(startY - this.height)},{x:startX, y:(startY - this.height*2)}]
 
-        
         this.x = this.body[this.body.length-1].x;
         this.y = this.body[this.body.length-1].y;
+
+        this.direction = 0;//up:0 , down: 1, left: 2, right:3
     }
     update(){
-        let tempY = this.body[this.body.length-1].y;
-        let tempX = this.body[this.body.length - 1].x;
+        // let tempY = this.body[this.body.length-1].y;
+        // let tempX = this.body[this.body.length - 1].x;
 
         if(keys[38]){//up
-            if(this.moving == false && this.y > canvas.height - canvas.height){
-                let newOb = {x:tempX, y:(tempY -= grid)};
+            // if(this.moving == false && this.y > canvas.height - canvas.height){
+            //     let newOb = {x:tempX, y:(tempY -= grid)};
 
-                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
-                    this.moveS(newOb);
-                }
-            }else if(this.moving == false){
-                this.dead();
-            }
+            //     if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+            //         this.moveCoord(newOb);
+            //     }
+            // }else if(this.moving == false){
+            //     this.dead();
+            // }
+            this.direction = 0;
         }
         if(keys[40]){//down
-            if(this.y < canvas.height - this.height && this.moving == false){
-                let newOb = {x:tempX, y:(tempY += grid)};
-                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
-                    this.moveS(newOb);
-                }
-            }else if(this.moving == false){
-                this.dead();
-            }
+            // if(this.y < canvas.height - this.height && this.moving == false){
+            //     let newOb = {x:tempX, y:(tempY += grid)};
+            //     if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+            //         this.moveCoord(newOb);
+            //     }
+            // }else if(this.moving == false){
+            //     this.dead();
+            // }
+            this.direction = 1;
         }
         if(keys[37]){//left
-            if(this.x > 0 && this.moving == false){
-                let newOb = {x:(tempX -= grid), y:tempY};
-                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
-                    this.moveS(newOb);
-                }
-            }else if(this.moving == false){
-                this.dead();
-            }
+            // if(this.x > 0 && this.moving == false){
+            //     let newOb = {x:(tempX -= grid), y:tempY};
+            //     if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+            //         this.moveCoord(newOb);
+            //     }
+            // }else if(this.moving == false){
+            //     this.dead();
+            // }
+            this.direction = 2;
         }
         if(keys[39]){//right
-            if(this.x < canvas.width - this.width && this.moving == false){
-                let newOb = {x:(tempX += grid), y:tempY};
-                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
-                    this.moveS(newOb);
-                }
-            }else if(this.moving == false){
-                this.dead();
-            }
+            // if(this.x < canvas.width - this.width && this.moving == false){
+            //     let newOb = {x:(tempX += grid), y:tempY};
+            //     if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+            //         this.moveCoord(newOb);
+            //     }
+            // }else if(this.moving == false){
+            //     this.dead();
+            // }
+            this.direction = 3;
         }
+        this.move();
     }
     draw(){
         // alert('drawSnake');
@@ -68,7 +74,56 @@ class Snake{
             ctx.fillRect(this.body[i].x,this.body[i].y,this.width,this.height);            
         }
     }
-    moveS(newOb){
+    move(){
+        let tempY = this.body[this.body.length-1].y;
+        let tempX = this.body[this.body.length - 1].x;
+        console.log(this.direction);
+
+        if(this.direction == 0){//up
+            console.log('goup');
+            if(this.moving == false && this.y > canvas.height - canvas.height){
+                let newOb = {x:tempX, y:(tempY -= grid)};
+
+                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+                    this.moveCoord(newOb);
+                }
+            }else if(this.moving == false){
+                this.dead();
+            }
+        }
+        if(this.direction == 1){//down
+            if(this.y < canvas.height - this.height && this.moving == false){
+                let newOb = {x:tempX, y:(tempY += grid)};
+                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+                    this.moveCoord(newOb);
+                }
+            }else if(this.moving == false){
+                this.dead();
+            }
+        }
+        if(this.direction == 2){//left
+            if(this.x > 0 && this.moving == false){
+                let newOb = {x:(tempX -= grid), y:tempY};
+                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+                    this.moveCoord(newOb);
+                }
+            }else if(this.moving == false){
+                this.dead();
+            }
+        }
+        if(this.direction == 3){//right
+            if(this.x < canvas.width - this.width && this.moving == false){
+                let newOb = {x:(tempX += grid), y:tempY};
+                if(newOb.x != this.body[this.body.length - 2].x || newOb.y != this.body[this.body.length - 2].y){
+                    this.moveCoord(newOb);
+                }
+            }else if(this.moving == false){
+                this.dead();
+            }
+        }
+        this.moving = false;
+    }
+    moveCoord(newOb){
         if(!this.checkIfBody(newOb)){
             this.body.push(newOb);
 
@@ -101,8 +156,10 @@ class Snake{
         for (let i = 0; i < this.body.length; i++) {
             ctx.fillStyle = 'red';
             ctx.fillRect(this.body[i].x,this.body[i].y,this.width,this.height);
-            resetGame();            
         }
+        // alert('died');
+        pauseGame();
+        // resetGame();  
     }
 }
 
