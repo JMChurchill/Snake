@@ -13,7 +13,7 @@ let keys = [];
 let score = 0;
 let collisionsCount = 0;
 let frame = 0;
-let gameSpeed = 0.5;
+let gameSpeed = 0.25;
 let safe = false;
 let pause = false;
 

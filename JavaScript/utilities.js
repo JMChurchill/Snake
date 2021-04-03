@@ -3,15 +3,15 @@ function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     // alert('test');
     snake.draw();
+    food.draw();
+
     // snake.update();
     snake.move();
-    food.draw();
     handleFood();
     handleScoreBoard();
     frame++;
     // sleep(2000);
     // console.log("Waited 2s");
-    count++;
     // requestAnimationFrame(animate);
     // if(count == 4){
     //     pauseGame();
@@ -20,7 +20,6 @@ function animate(){
 }
 // animate();
 intervalTime = gameSpeed * 1000;
-count = 0;
 interval = setInterval(animate,intervalTime);
 // function checkBtn(){
 // //event listeners
@@ -57,7 +56,10 @@ window.addEventListener('keydown',function(e){
     if(keys[39]){//right
         snake.direction = 3;
     }
-    console.log('directoin'+snake.direction);
+    if(keys[82]){
+        restartBtnPress();
+    }
+    // console.log('directoin'+snake.direction);
 
 });
 
@@ -107,38 +109,50 @@ function resetGame(){
 
 }
 
-function sleep(milliseconds) {
-    const start = Date.now();
-    while (Date.now() - start < milliseconds);
-}
 function pauseGame(){
+    pause = true;
+    handleGameOver();
     interval = clearInterval(interval);
-    // handleGameOver();
+}
+function restartBtnPress(){
+    if(pause == true){
+        resetGame();
+        interval = setInterval(animate,intervalTime);
+        ctx2.clearRect(0,0,canvas2.width,canvas2.height);
+        pause = false;
+        canvas2.style.backgroundColor = "rgba(0, 0, 0, 0)";
+        canvas2.style.border = '5px solid green';
+    }
 }
 
-// function handleGameOver(){
-//     ctx2.fillStyle = 'black';
-//     ctx2.font = '50px Verdana';
-//     ctx2.fillText('Game Over', 110, canvas2.height/2);
-//     ctx2.fillStyle = 'black';
-//     ctx2.font = '45px Verdana';
-//     ctx2.fillText('Score: '+score, 160, canvas2.height/2 + 50);
+function handleGameOver(){
+    canvas2.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    canvas2.style.border = '5px solid red';
 
+    ctx2.fillStyle = 'black';
+    ctx2.font = '50px Verdana';
+    ctx2.fillText('Game Over', 110, canvas2.height/2);
+    ctx2.fillStyle = 'black';
+    ctx2.font = '45px Verdana';
+    ctx2.fillText('Score: '+score, 160, canvas2.height/2 + 50);
+    ctx2.fillStyle = 'black';
+    ctx2.font = '35px Verdana';
+    ctx2.fillText('Press R to play again', 75, canvas2.height/2 + 100);
 
-//     ctx2.beginPath();
-//     ctx2.rect(rect.x - rect.width/2, rect.y, rect.width, rect.height); 
-//     ctx2.fillStyle = '#FFFFFF'; 
-//     ctx2.fillStyle = 'rgba(225,225,225,0.5)';
-//     ctx2.fillRect(rect.x - rect.width/2, rect.y, rect.width, rect.height);
-//     ctx2.fill(); 
-//     ctx2.lineWidth = 2;
-//     ctx2.strokeStyle = '#000000'; 
-//     ctx2.stroke();
-//     ctx2.closePath();
-//     ctx2.font = '40pt Kremlin Pro Web';
-//     ctx2.fillStyle = '#000000';
-//     ctx2.fillText('Start', rect.width/2 + 100, 415);
-// }
+    // ctx2.beginPath();
+    // ctx2.rect(rect.x - rect.width/2, rect.y, rect.width, rect.height); 
+    // ctx2.fillStyle = '#FFFFFF'; 
+    // ctx2.fillStyle = 'rgba(225,225,225,0.5)';
+    // ctx2.fillRect(rect.x - rect.width/2, rect.y, rect.width, rect.height);
+    // ctx2.fill(); 
+    // ctx2.lineWidth = 2;
+    // ctx2.strokeStyle = '#000000'; 
+    // ctx2.stroke();
+    // ctx2.closePath();
+    // ctx2.font = '40pt Kremlin Pro Web';
+    // ctx2.fillStyle = '#000000';
+    // ctx2.fillText('Start', rect.width/2 + 100, 415);
+}
 // // document.addEventListener("mousemove", getMousePos, false);
 
 // function getMousePos(canvas2, event) {
