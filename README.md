@@ -1,6 +1,8 @@
 # Snake
 Snake Game made with JavaScript
 ## What I Learned
-* Improved Understanding of the Javascript
+* Improved understanding of the JavaScript
 * HTML Canvas
-* OOP in Javascript
+* OOP in JavaScript
+## Live Link
+https://cheery-mousse-db7d4c.netlify.app/
